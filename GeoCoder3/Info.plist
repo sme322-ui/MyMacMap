@@ -8,10 +8,14 @@
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
@@ -26,7 +30,7 @@
 	<string>App Example Want to access your health data in order to analyze your health and best device</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>App Example Want to access your health data in order to analyze your health and best device</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>let map use location</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
@@ -51,8 +55,12 @@
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
+	<key>OS_ACTIVITY_MODE</key>
+	<string>disable</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>let map use location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>let map use location</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
