@@ -186,7 +186,7 @@ import iAd
    
     var timer=Timer()
     var restaurant1:Restaurant!
-    let locationManager = CLLocationManager()
+    var locationManager = CLLocationManager()
     let healthStore = HKHealthStore()
     let types: Set<HKObjectType> = []
     let lm = CLLocationManager()
@@ -302,7 +302,12 @@ import iAd
         
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         locationManager.delegate = self;
-        
+             
+                locationManager.requestWhenInUseAuthorization()             //尋求使用者是否授權APP得知位置
+                                          //若是user有移動，可以將透過delegate知道位置顯示
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest   //user位置追蹤精確程度，設置成最精確位置
+                locationManager.activityType = .automotiveNavigation        //設定使用者的位置模式，手機會去依照不同設定做不同的電力控制
+                locationManager.startUpdatingLocation()
         
         var status = CLLocationManager.authorizationStatus()
         if status == .notDetermined || status == .denied || status == .authorizedWhenInUse {
@@ -632,7 +637,7 @@ import iAd
         myMapView.mapType = .standard
         myMapView.isPitchEnabled = true
         
-     
+        myMapView.userTrackingMode = .follow//效果:不带方向的追踪,显示用户的位置,并且会跟随用户移动
       
         myMapView.showsUserLocation = true
         myMapView.userTrackingMode = .follow
@@ -642,9 +647,11 @@ import iAd
         self.startRequest()
         
    
-        
-        
-        
+        let center = UNUserNotificationCenter.current()
+        let locationManager = CLLocationManager()
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startMonitoringVisits()
+
         var restaurantNames = ["teaha","CaffeLatte","Espresso","Americano"]
         
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -665,9 +672,10 @@ import iAd
         let latDelta = 0.05
         let longDelta = 0.05
         let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan.init(latitudeDelta: latDelta, longitudeDelta: longDelta)
-        let sourceLocation = CLLocationCoordinate2D(latitude: 40.759011, longitude: -73.984472)
-                let destinationLocation = CLLocationCoordinate2D(latitude: 40.748441, longitude: -73.985564)
-                
+        let sourceLocation = CLLocationCoordinate2D(latitude: 25.033493, longitude: 121.564101)
+        let destinationLocation = CLLocationCoordinate2D(latitude: 22.817701, longitude: 120.2858)
+    
+        
                 // 3.
                 let sourcePlacemark = MKPlacemark(coordinate: sourceLocation, addressDictionary: nil)
                 let destinationPlacemark = MKPlacemark(coordinate: destinationLocation, addressDictionary: nil)
@@ -678,7 +686,7 @@ import iAd
                 
                 // 5.
                 let sourceAnnotation = MKPointAnnotation()
-                sourceAnnotation.title = "Times Square"
+                sourceAnnotation.title = "台北101"
         
         if let location = sourcePlacemark.location {
                   sourceAnnotation.coordinate = location.coordinate
@@ -686,7 +694,7 @@ import iAd
               
               
               let destinationAnnotation = MKPointAnnotation()
-              destinationAnnotation.title = "Empire State Building"
+              destinationAnnotation.title = "高雄市岡山區"
               
               if let location = destinationPlacemark.location {
                   destinationAnnotation.coordinate = location.coordinate
@@ -714,6 +722,58 @@ import iAd
 
             
         }
+        
+        ///
+        let sourceLocation2 = CLLocationCoordinate2D(latitude: 25.033671, longitude: 121.564427)
+        let destinationLocation2 = CLLocationCoordinate2D(latitude: 22.42, longitude: 120.21)
+        
+        // 3.
+        let sourcePlacemark2 = MKPlacemark(coordinate: sourceLocation2, addressDictionary: nil)
+        let destinationPlacemark2 = MKPlacemark(coordinate: destinationLocation2, addressDictionary: nil)
+        
+        // 4.
+        let sourceMapItem2 = MKMapItem(placemark: sourcePlacemark2)
+        let destinationMapItem2 = MKMapItem(placemark: destinationPlacemark2)
+        
+        // 5.
+        let sourceAnnotation2 = MKPointAnnotation()
+        sourceAnnotation2.title = "Times Squares"
+
+if let location = sourcePlacemark2.location {
+          sourceAnnotation2.coordinate = location.coordinate
+      }
+      
+      
+      let destinationAnnotation2 = MKPointAnnotation()
+      destinationAnnotation2.title = "Empire State Building"
+      
+      if let location = destinationPlacemark2.location {
+          destinationAnnotation2.coordinate = location.coordinate
+      }
+
+self.myMapView.showAnnotations([sourceAnnotation2,destinationAnnotation2], animated: true )
+let directionRequest2 = MKDirections.Request()
+directionRequest2.source = sourceMapItem2
+directionRequest2.destination = destinationMapItem2
+       directionRequest2.transportType = .automobile
+
+let directions2 = MKDirections(request: directionRequest2)
+
+directions2.calculate{
+    (response2,error)-> Void in
+    guard let response2 = response2 else {
+                    if let error = error {
+                        print("Error: \(error)")
+                    }
+                    
+                    return
+                }
+    let route2 = response2.routes[0]
+    self.myMapView.addOverlay((route2.polyline), level: MKOverlayLevel.aboveRoads)
+
+    
+}
+        ///
         location = CLLocationManager();
           location.delegate = self;
           //詢問使用者是否同意給APP定位功能
@@ -800,8 +860,8 @@ import iAd
         }
 
      
-        let center:CLLocation = CLLocation(latitude: 25.05, longitude: 121.515)
-        let currentRegion = MKCoordinateRegion(center: center.coordinate, span: currentLocationSpan)
+        let center2:CLLocation = CLLocation(latitude: 25.05, longitude: 121.515)
+        let currentRegion = MKCoordinateRegion(center: center2.coordinate, span: currentLocationSpan)
         myMapView.setRegion(currentRegion, animated: true)
         
         var annView = myMapView.dequeueReusableAnnotationView(withIdentifier: "pin") as? MKPinAnnotationView
@@ -892,6 +952,7 @@ import iAd
         myMapView.showsCompass = true
         myMapView.showsScale = true
         myMapView.showsTraffic = true
+        myMapView.showsUserLocation = true
         
        
         let request2 = MKLocalSearch.Request()
@@ -914,6 +975,9 @@ import iAd
             }
             
         }
+        
+        
+        
         
         print("present location : (newLocation.coordinate.latitude), (newLocation.coordinate.longitude)")
         
@@ -1266,12 +1330,13 @@ import iAd
                 self.info.text = "成功"
                  
                 //傳至下一頁面
-                let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainActivity")
+                let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MapsActivity")
                  
                 self.present(viewController, animated: false, completion: nil)
                 // 返回 self.dismissViewControllerAnimated(true, completion: nil)
                  
             }else{
+                
                 self.info.text = "輸入錯囉"
             }
         }
@@ -1685,6 +1750,7 @@ import iAd
         }
         
     }
+    
     func authorizeHealthKit(completion: ((_ success: Bool, _ error: NSError?) -> Void)!) {
 
            // State the health data type(s) we want to read from HealthKit.
@@ -2039,7 +2105,33 @@ import iAd
         print("點擊大頭針的說明")
         let route = currentRoute?.distance
     }
-    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        determineMyCurrentLocation()
+        
+    }
+    func determineMyCurrentLocation(){
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled(){
+            locationManager.startUpdatingLocation()
+        }
+    }
+    func locationManager(_ manager:CLLocationManager,didUpdateLocations locations:[CLLocation]){
+        let userLocation:CLLocation = locations[0] as CLLocation
+        print("user latitude = \(userLocation.coordinate.latitude)")
+               print("user longitude = \(userLocation.coordinate.longitude)")
+    }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
+        {
+            print("Error \(error)")
+        }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
     
      
@@ -2091,9 +2183,7 @@ import iAd
         
         
     }
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-    print("定位失败")
-    }
+  
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
     print("进入该区域 -> \\(region.identifier)")
     }
@@ -2620,7 +2710,20 @@ extension Acronym {
         self.long = long
     }
 }
+extension AppDelegate: CLLocationManagerDelegate {
+  func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
+    // create CLLocation from the coordinates of CLVisit
+    let clLocation = CLLocation(latitude: visit.coordinate.latitude, longitude: visit.coordinate.longitude)
 
+    // Get location description
+  }
+
+  func newVisitReceived(_ visit: CLVisit, description: String) {
+   // let location = Location(visit: visit, descriptionString: description)
+
+    // Save location to disk
+  }
+}
 extension HKHealthStore
 {
     func getClassName(obj : AnyObject) -> String
