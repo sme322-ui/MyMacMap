@@ -243,7 +243,6 @@ import iAd
 
     }
     var location : CLLocationManager!; //座標管理元件
-
     
     
     @IBOutlet weak var username_input: UITextField!
@@ -338,7 +337,7 @@ import iAd
                    
                    // insert
                    let _ = mydb.insert("students",
-                                       rowInfo: ["name":"'USB'","height":"178.2"])
+                                       rowInfo: ["name":"'RAM'","height":"500"])
                    
                    // select
                    let statement = mydb.fetch("students", cond: "1 == 1", order: nil)
@@ -354,7 +353,7 @@ import iAd
                    let _ = mydb.update(
                        "students",
                        cond: "id = 2",
-                       rowInfo: ["name":"'USB'","height":"176.8"])
+                       rowInfo: ["name":"'RAM'","height":"500"])
                    
                    // delete
                    let _ = mydb.delete("students", cond: "id = 5")
@@ -1672,7 +1671,6 @@ directions2.calculate{
               
 
                 // I must assign json to weatherData here
-
                 DispatchQueue.main.async {
                     completed()
                 }
@@ -2720,7 +2718,6 @@ extension AppDelegate: CLLocationManagerDelegate {
 
   func newVisitReceived(_ visit: CLVisit, description: String) {
    // let location = Location(visit: visit, descriptionString: description)
-
     // Save location to disk
   }
 }
@@ -2767,9 +2764,4 @@ extension HKHealthStore
         self.execute(query)
     }
 }
-
-
-// MARK: - Login with google
-
-
 
