@@ -9,8 +9,6 @@ import WebKit
 import SQLite3
 import CoreBluetooth
 import AVFoundation
-
-
 import Foundation
 import CoreData
 import iAd
@@ -103,6 +101,31 @@ import iAd
   
     
 
+    private func readLocalFile(forName name: String) -> Data? {
+        do {
+            if let bundlePath = Bundle.main.path(forResource: name,
+                                                 ofType: "json"),
+                let jsonData = try String(contentsOfFile: bundlePath).data(using: .utf8) {
+                return jsonData
+            }
+        } catch {
+            print(error)
+        }
+        
+        return nil
+    }
+    private func parse(jsonData: Data) {
+        do {
+            let decodedData = try JSONDecoder().decode(DemoData.self,
+                                                       from: jsonData)
+            
+            print("Title: ", decodedData.title)
+            print("Description: ", decodedData.description)
+            print("===================================")
+        } catch {
+            print("decode error")
+        }
+    }
     
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         guard peripheral.state == .poweredOn else{
@@ -151,7 +174,10 @@ import iAd
     enum SendDataError:Error{
         case CharacteristicNotFound
     }
-    
+    struct DemoData: Codable {
+        let title: String
+        let description: String
+    }
     var myLocationManager :CLLocationManager!
  
     @IBOutlet var addressLabel: UILabel!
@@ -359,7 +385,68 @@ import iAd
                    let _ = mydb.delete("students", cond: "id = 5")
                
                }
-           
+        struct CreateUserBody: Encodable {
+            let name: String
+            let job: String
+        }
+        struct CreateUserResponse: Decodable {
+            let name: String
+            let job: String
+            let id: String
+        }
+        struct Meme: Codable {
+           let id: Int
+           let image: URL
+           let caption: String
+           let category: String
+            
+        }
+        
+        let url5 = URL(string: "https://foodprint.ws/j_spring_security_check")!
+        var request5 = URLRequest(url: url5)
+        request5.httpMethod = "POST"
+        request5.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let encoder = JSONEncoder()
+        let user = CreateSCMPBody(ArticleNum: "無叻縣", name: "白米", id: "1", brandName: "糧農", number: 012, manufacture: "農肥料資材存放室", unit: "1", warehouseNumber: Int(0.00))
+        let data = try? encoder.encode(user)
+        URLSession.shared.uploadTask(with: request5, from: data) { data, response, error in
+            if let data = data {
+                do {
+                    let decoder = JSONDecoder()
+                    let createUserResponse = try decoder.decode(CreateUserResponse.self, from: data)
+                    print(createUserResponse)
+                } catch  {
+                    print(error)
+                }
+            }
+        }.resume()
+        
+        let urlStr = "https://itunes.apple.com/search?term=swift&media=music"
+        if let url = URL(string: urlStr) {
+            URLSession.shared.dataTask(with: url) { data, response , error in
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .iso8601
+                if let data = data {
+                    do {
+                        let searchResponse = try decoder.decode(SearchResponse.self, from: data)
+                        print(searchResponse.results)
+                    } catch {
+                        print(error)
+                    }
+                } else {
+                    print("error")
+                }
+            }.resume()
+        }
+        
+        if let localData = self.readLocalFile(forName: "data") {
+            self.parse(jsonData: localData)
+        }
+        
+        let urlString = "https://raw.githubusercontent.com/programmingwithswift/ReadJSONFileURL/master/hostedDataFile.json"
+
+      
         
         
         callAPI2()
@@ -393,35 +480,29 @@ import iAd
             }
             
         }.resume()
-       
+     
+        
         
         
         interstitialPresentationPolicy = .manual
         UIViewController.prepareInterstitialAds()
-        let url5 = URL(string: "https://reqres.in/api/users/3")!
-        var request5 = URLRequest(url: url5)
-        request5.httpMethod = "POST"
-        request5.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let encoder = JSONEncoder()
-        let user = CreateUserBody(name: "Peter", job: "情歌王子")
-        let data = try? encoder.encode(user)
-        URLSession.shared.uploadTask(with: request5, from: data) { data, response, error in
-            if let data = data {
-                do {
-                    let decoder = JSONDecoder()
-                    let createUserResponse = try decoder.decode(CreateUserResponse.self, from: data)
-                    print(createUserResponse)
-                } catch  {
-                    print(error)
-                }
-            }
-        }.resume()
+       
         
        
        
         var dbPtr: OpaquePointer? = nil
        
-    
+        let session = URLSession(configuration: .default)
+        let url2 = URL(string: "https://reqres.in/api/users?page=1")!
+        var request6 = URLRequest(url: url2)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data,
+               let content = String(data: data, encoding: .utf8) {
+                print(content)
+            }
+        }.resume()
+        
         func queryOneData() {
             let queryString = "SELECT * FROM Contacts WHERE Id == 1;"
             var queryStatement: OpaquePointer?
@@ -545,8 +626,8 @@ import iAd
         }
         
         
-        let urlString = URL(string: "https://reqres.in/api/users/3")  // Making the URL
-        if let url = urlString {
+        let urlString2 = URL(string: "https://reqres.in/api/users/3")  // Making the URL
+        if let url = urlString2 {
            let task = URLSession.shared.dataTask(with: url) {
               (data, response, error) in // Creating the URL Session.
               if error != nil {
@@ -736,7 +817,7 @@ import iAd
         
         // 5.
         let sourceAnnotation2 = MKPointAnnotation()
-        sourceAnnotation2.title = "Times Squares"
+        sourceAnnotation2.title = "Taipei City"
 
 if let location = sourcePlacemark2.location {
           sourceAnnotation2.coordinate = location.coordinate
@@ -980,9 +1061,9 @@ directions2.calculate{
         
         print("present location : (newLocation.coordinate.latitude), (newLocation.coordinate.longitude)")
         
-        let url2:NSURL! = NSURL(string: "http://www.hangge.com")
+        let url4:NSURL! = NSURL(string: "http://www.hangge.com")
         //创建请求对象
-        let urlRequest:NSURLRequest = NSURLRequest(url: url6!)
+        let urlRequest:NSURLRequest = NSURLRequest(url: url4! as URL)
         //响应对象
         var response:URLResponse?
                  
@@ -1108,8 +1189,8 @@ directions2.calculate{
         }
         
         
-        let urlString2 = URL(string: "api.openweathermap.org/data/2.5/forecast?id=524901&APPID=1111111111")  // Making the URL
-        if let url = urlString2 {
+        let urlString3 = URL(string: "api.openweathermap.org/data/2.5/forecast?id=524901&APPID=1111111111")  // Making the URL
+        if let url = urlString3 {
            let task = URLSession.shared.dataTask(with: url) {
               (data, response, error) in // Creating the URL Session.
               if error != nil {
@@ -1137,8 +1218,8 @@ directions2.calculate{
         
        
         peripheralManager = CBPeripheralManager(delegate:self,queue:queue)
-        let urlString3 = URL(string: "api.openweathermap.org/data/2.5/forecast?id=524901&APPID=1111111111")  // Making the URL
-        if let url = urlString3 {
+        let urlString4 = URL(string: "api.openweathermap.org/data/2.5/forecast?id=524901&APPID=1111111111")  // Making the URL
+        if let url = urlString4 {
            let task = URLSession.shared.dataTask(with: url) {
               (data, response, error) in // Creating the URL Session.
               if error != nil {
@@ -2487,16 +2568,46 @@ extension Resource {
     }
 }
 
-struct CreateUserBody: Encodable {
+struct CreateSCMPBody: Encodable {
+    let ArticleNum: String
     let name: String
-    let job: String
+    let id: String
+    let brandName:String
+    let number:Int
+    let manufacture:String
+ 
+    let unit:String
+    let warehouseNumber:Int
+    
+    
 }
 struct CreateUserResponse: Decodable {
     let name: String
     let job: String
     let id: String
 }
+struct Meme {
+   let id: Int
+   let image: URL
+   let caption: String
+   let category: String
+}
+struct StoreItem: Codable {
+   let artistName: String
+   let trackName: String
+   let collectionName: String?
+   let previewUrl: URL
+   let artworkUrl100: URL
+   let trackPrice: Double?
+   let releaseDate: Date
+   let isStreamable: Bool?
+}
+struct SearchResponse: Codable {
+   let resultCount: Int
+   let results: [StoreItem]
+}
 
+extension Meme: Codable { }
 struct Loan:Codable{
     var name:String
     var country:String
