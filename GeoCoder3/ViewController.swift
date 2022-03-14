@@ -41,13 +41,8 @@ import iAd
         
         private let queryType = HKQuantityType.quantityType(forIdentifier: .bodyTemperature)!
         private let querySample = HKSampleType.quantityType(forIdentifier: .bodyTemperature)!
-        
-
-
-   
-    var adBannerView:ADBannerView?
+        var adBannerView:ADBannerView?
     var isAdDisplay = false
-    
     var restaurantNames = ["teaha","CaffeLatte","Espresso","Americano"]
     var homeModel = Place()
     
@@ -164,13 +159,7 @@ import iAd
         service.characteristics = charArray
         
         peripheralManager.add(service)
-        
-    
-        
-        
-        
-            
-        }
+    }
     enum SendDataError:Error{
         case CharacteristicNotFound
     }
@@ -196,13 +185,7 @@ import iAd
     
     let login_url = "https://www.kaleidosblog.com/tutorial/login/api/Login"
         let checksession_url = "https://www.kaleidosblog.com/tutorial/login/api/CheckSession"
-
-    
-
-       
-    
-        
-        var login_session:String = ""
+    var login_session:String = ""
 
     private static var kivaLoanURL1 = "https://api.kivaws.org/v1/loans/newest.json"
 
@@ -263,14 +246,8 @@ import iAd
     @IBAction func getHeartRateBtn(_ sensor:UIButton){
      
       setHeartRate(80)
-     
-                  
-               
-
-    }
+}
     var location : CLLocationManager!; //座標管理元件
-    
-    
     @IBOutlet weak var username_input: UITextField!
     
     @IBOutlet weak var password_input: UITextField!
@@ -445,10 +422,6 @@ import iAd
         }
         
         let urlString = "https://raw.githubusercontent.com/programmingwithswift/ReadJSONFileURL/master/hostedDataFile.json"
-
-      
-        
-        
         callAPI2()
          mm.startAccelerometerUpdates(to: OperationQueue()){
              (data,error) in
@@ -486,12 +459,7 @@ import iAd
         
         interstitialPresentationPolicy = .manual
         UIViewController.prepareInterstitialAds()
-       
-        
-       
-       
         var dbPtr: OpaquePointer? = nil
-       
         let session = URLSession(configuration: .default)
         let url2 = URL(string: "https://reqres.in/api/users?page=1")!
         var request6 = URLRequest(url: url2)
@@ -647,11 +615,6 @@ import iAd
         canDisplayBannerAds = true
         adBannerView = ADBannerView(adType: ADAdType.banner)
         adBannerView?.delegate = self
-        
-        
-        
-        
-        
         let string = "Welcome to cloud logistic System"
         let utterance = AVSpeechUtterance(string: string)
         utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
@@ -1055,10 +1018,7 @@ directions2.calculate{
             }
             
         }
-        
-        
-        
-        
+    
         print("present location : (newLocation.coordinate.latitude), (newLocation.coordinate.longitude)")
         
         let url4:NSURL! = NSURL(string: "http://www.hangge.com")
@@ -1431,12 +1391,7 @@ directions2.calculate{
         var charDictionary = [String: CBMutableCharacteristic]()
         service = CBMutableService(type: CBUUID(string:"A001_SERVICE"), primary: true)
         characteristic = CBMutableCharacteristic(type: CBUUID(string: "A001_SERVICES"), properties: [.notifyEncryptionRequired,.write,.read], value: nil, permissions: [.writeEncryptionRequired,.readEncryptionRequired])
-       
-    
-       
-        
         charArray.append(characteristic)
-        
         service.characteristics = charArray
         
         periperalManager.add(service)
@@ -1575,17 +1530,7 @@ directions2.calculate{
         var postData:NSData;
         
         let url = NSURL(string: srtURL)!
-        
-        
-        
-    
-        
-        
-        
-        
-        
-        
-    }
+}
     
     
     func statisticsQuery(){
@@ -1623,13 +1568,7 @@ directions2.calculate{
         
         completionHandler()
     }
-    
-   
-   
-
-    func createDirectionRequest(from coordinate:CLLocationCoordinate2D)->MKDirections.Request{
-        
-        
+func createDirectionRequest(from coordinate:CLLocationCoordinate2D)->MKDirections.Request{
         let startingLocation = MKPlacemark(coordinate: coordinate)
         let destinationLocation = MKPlacemark(coordinate: coordinate)
         
@@ -1668,11 +1607,7 @@ directions2.calculate{
     }
     func addAnnotations() {
         myMapView?.delegate = self
-
-     
-      
-
-    }
+}
  
     func getHeartRate(completion: @escaping (_ _results:[HKSample]?)->Void){
         let type = HKQuantityType.quantityType(forIdentifier: .heartRate)
@@ -1774,13 +1709,7 @@ directions2.calculate{
             alertMessage.addAction(UIAlertAction(title:"ok",style:.default,handler:nil))
             self.present(alertMessage, animated: true, completion: nil)
         }
-        
-     
-        
-     
-        
-        
-        
+ 
     }
   func prepareForSeque(seque:UIStoryboardSegue,sender:AnyObject?){
         if seque.identifier == "showSteps"{
@@ -2078,12 +2007,7 @@ directions2.calculate{
         }
         return renderer
     }
-    
-    
-    
-    
-    
-    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer {
+   func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer {
             let renderer = MKPolylineRenderer(overlay: overlay)
         renderer.strokeColor = UIColor.orange
             renderer.lineWidth = 4.0
@@ -2147,9 +2071,7 @@ directions2.calculate{
            }
            return nil
        }
-
-    
-        
+  
     func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool,didUpdateLocations locations: [CLLocation]!) {
         print("物流車移動中")
     }
@@ -2364,9 +2286,7 @@ directions2.calculate{
         
 
     }
-        
-      
-        func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer!{
+     func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer!{
             if (overlay is MKPolyline) {
                 let pr = MKPolylineRenderer(overlay: overlay)
                 pr.strokeColor = UIColor.red
@@ -2415,14 +2335,7 @@ directions2.calculate{
             let long: String
         }
         typealias JSONDictionary = [String : Any]
-        
-        
-        
-   
-    
-
-
-    return nil
+        return nil
 
     }
     
