@@ -64,10 +64,6 @@ import iAd
         return cell
     }
     let url = URL(string: "https://api.kivaws.org/v1/loans/newest.json")!
-     
-    
-    
-    
     var webView:WKWebView!
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         let tmp = message.body as! String
