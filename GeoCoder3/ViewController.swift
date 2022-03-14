@@ -2152,25 +2152,7 @@ directions2.calculate{
         
     func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool,didUpdateLocations locations: [CLLocation]!) {
         print("物流車移動中")
-        /*
-        let annotationView:MKPinAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView
-     //   myMapView.addAnnotation()
-        //取得目前的座標位置
-        //取得目前的座標位置
-          let c = locations[0] as CLLocation;
-          let nowLocation = CLLocationCoordinate2D(latitude: c.coordinate.latitude, longitude: c.coordinate.longitude);
-          //將map中心點定在目前所在的位置
-          //span是地圖zoom in, zoom out的級距
-          let _span:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.0005, longitudeDelta: 0.0005);
-          self.myMapView.setRegion(MKCoordinateRegion(center: nowLocation, span: _span), animated: true);
-          //加入座標
-       // addPointAnotation(c.coordinate.latitude, longitude: c.coordinate.longitude);
-        myMapView.addAnnotation(annotationView as! MKAnnotation);
-        */
-    
     }
- 
-
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
         print("載入地圖完成時")
    
