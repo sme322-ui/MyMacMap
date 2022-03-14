@@ -424,7 +424,6 @@ import iAd
                  let tmp = data.acceleration
                  print("(x,y,z) = (\tmp.x) , \(tmp.y),\(tmp.z))")
                  
-                 
              }
             
          }
@@ -625,17 +624,9 @@ import iAd
         
         layer.masksToBounds = true
         view.layer.addSublayer(layer)
-        
-
         requestLocationAccess()
-
         myLocationManager = CLLocationManager()
-        
-       
         myLocationManager.delegate = self
-  
-        
-        
         myLocationManager.distanceFilter = kCLLocationAccuracyNearestTenMeters
         myLocationManager.desiredAccuracy = kCLLocationAccuracyBest
         myLocationManager.requestAlwaysAuthorization()
@@ -744,23 +735,13 @@ import iAd
                         }
             let route = response.routes[0]
             self.myMapView.addOverlay((route.polyline), level: MKOverlayLevel.aboveRoads)
-
-            
         }
-        
-        ///
         let sourceLocation2 = CLLocationCoordinate2D(latitude: 25.033671, longitude: 121.564427)
         let destinationLocation2 = CLLocationCoordinate2D(latitude: 22.42, longitude: 120.21)
-        
-        // 3.
         let sourcePlacemark2 = MKPlacemark(coordinate: sourceLocation2, addressDictionary: nil)
         let destinationPlacemark2 = MKPlacemark(coordinate: destinationLocation2, addressDictionary: nil)
-        
-        // 4.
         let sourceMapItem2 = MKMapItem(placemark: sourcePlacemark2)
         let destinationMapItem2 = MKMapItem(placemark: destinationPlacemark2)
-        
-        // 5.
         let sourceAnnotation2 = MKPointAnnotation()
         sourceAnnotation2.title = "Taipei City"
 
@@ -806,9 +787,6 @@ directions2.calculate{
           //開始接收目前位置資訊
           location.startUpdatingLocation();
           location.distanceFilter = CLLocationDistance(10); //表示移動10公尺再更新座標資訊
-        
-        
-        
         getUsersList()
         mm.startDeviceMotionUpdates(to:OperationQueue()){(motion,error) in
             if let motion = motion{
@@ -1241,8 +1219,7 @@ directions2.calculate{
         
         // 啟動 task
         dataTask.resume()
-
-    }
+}
     private func callAPI2() {
        // 根據網站的 Request tab info 我們拼出請求的網址
        let url = URL(string: "https://dataservice.accuweather.com/currentconditions/v1/315078?apikey=\(apiKey2)&language=zh-Tw")!
@@ -1380,8 +1357,8 @@ directions2.calculate{
         if segue.identifier == "showRestaurantDetail"{
             var destinationController = segue.destination as! RestaurantDetailViewController
         
-                        }
         }
+    }
     func peripheralManagerDidStartAdvertising(_ peripheral: CBPeripheralManager, error: Error?) {
         print("開始廣播！！！")
     }
@@ -2522,10 +2499,6 @@ extension UIView{
         }
     }
 }
-
-
-  
-    
 
 extension Acronym {
     static let all = Resource<[Acronym]>(url: URL(string: "http://localhost:8080/")!, parseJSON: { json in
