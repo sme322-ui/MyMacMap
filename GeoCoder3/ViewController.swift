@@ -14,13 +14,8 @@ import CoreData
 import iAd
 @objcMembers class ViewController: UIViewController, CLLocationManagerDelegate,WKUIDelegate,WKScriptMessageHandler, MKMapViewDelegate,CBPeripheralManagerDelegate,NSURLConnectionDataDelegate,UITableViewDataSource,AVSpeechSynthesizerDelegate,UITableViewDelegate,HomeModelDelegate,ADBannerViewDelegate {
     @IBOutlet weak var locationLabel: UILabel!
-       @IBOutlet weak var tmpLabel: UILabel!
-       
-   
-   
+    @IBOutlet weak var tmpLabel: UILabel!
     @IBOutlet var outputTextView: UITextView!
-    
-    
     let apiKey2 = "ZEJtsYY2yTKTa8tUQ9TfMI1Jl7e6JfD5"
     func itemDownloaded(locations: [Place]) {
         
