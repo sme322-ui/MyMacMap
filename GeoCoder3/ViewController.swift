@@ -2146,15 +2146,7 @@ func createDirectionRequest(from coordinate:CLLocationCoordinate2D)->MKDirection
         segmentedControl.isHidden = false
         let directionRequest = MKDirections.Request()
         
-       
-        
-     
-        
-    }
-    // 代理方法一:当获取到用户的位置的时候会来到该方法
-    /// - Parameters:
-    ///   - manager: 位置管理者
-    ///   - locations: 位置数组
+        }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation],newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
     //locations是一个保存着CLLocation对象的集合,我们一般都是取出last,因为他是最新的.
            print("定位到了")
