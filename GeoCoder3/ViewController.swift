@@ -1722,14 +1722,12 @@ func createDirectionRequest(from coordinate:CLLocationCoordinate2D)->MKDirection
         let annotationView:MKPinAnnotationView?=mapView.dequeueReusableAnnotationView(withIdentifier: identifier)as?
         MKPinAnnotationView
         
-        
-        
         let leftIconView = UIImageView(frame:CGRect(x: 0,y: 0,width: 53,height: 53))
-        leftIconView.image = UIImage(named:restaurant.image)
-        annotationView?.leftCalloutAccessoryView = leftIconView
+          leftIconView.image = UIImage(named:restaurant.image)
+          annotationView?.leftCalloutAccessoryView = leftIconView
         
         
-        return annotationView
+          return annotationView
     }
     func fetchLatestLoans(){
         guard let loanUrl = URL(string:Self.kivaLoanURL) else{
@@ -1829,9 +1827,7 @@ func createDirectionRequest(from coordinate:CLLocationCoordinate2D)->MKDirection
         
         myMapView.addAnnotation(appleParkAnnotation)
         myMapView.addAnnotation(ortegapartAnnotation)
-        
-        
-    }
+ }
     
     func showRoute(_ response: MKDirections.Response) {
         
@@ -1890,8 +1886,6 @@ func createDirectionRequest(from coordinate:CLLocationCoordinate2D)->MKDirection
             }
             
         }
-                             
-       
     }
     
     func checkLocationAuthorization(){
@@ -1919,11 +1913,7 @@ func createDirectionRequest(from coordinate:CLLocationCoordinate2D)->MKDirection
         
     }
     
-
-    
-    
-    
-// MARK: MKMapViewDelegate Methods
+    // MARK: MKMapViewDelegate Methods
     func checkLocationService(){
         if CLLocationManager.locationServicesEnabled(){
             setUpLocationManager()
@@ -2263,9 +2253,6 @@ func createDirectionRequest(from coordinate:CLLocationCoordinate2D)->MKDirection
         return nil
 
     }
-    
-  
-
 }
 
 //QR code破解碼後開啟相對應ＡＰＰ
