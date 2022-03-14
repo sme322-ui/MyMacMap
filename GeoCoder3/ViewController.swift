@@ -428,8 +428,6 @@ import iAd
              }
             
          }
-        
-        
         let url = URL(string: "https://reqres.in/api/users?page=1")!
         var request = URLRequest(url: url)
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -448,11 +446,7 @@ import iAd
             }
             
         }.resume()
-     
-        
-        
-        
-        interstitialPresentationPolicy = .manual
+  interstitialPresentationPolicy = .manual
         UIViewController.prepareInterstitialAds()
         var dbPtr: OpaquePointer? = nil
         let session = URLSession(configuration: .default)
@@ -643,8 +637,6 @@ import iAd
         
         
         myLocationManager.distanceFilter = kCLLocationAccuracyNearestTenMeters
-  
-        
         myLocationManager.desiredAccuracy = kCLLocationAccuracyBest
         myLocationManager.requestAlwaysAuthorization()
         myLocationManager.startUpdatingLocation()
@@ -667,11 +659,8 @@ import iAd
     
         myMapView = MKMapView(frame: CGRect(x: 0, y: 20, width: fullSize.width, height: fullSize.height - 20))
         callAPI()
-     
         myMapView.showsUserLocation = true
         myMapView.delegate = self
-     
-       
         myMapView.mapType = .standard
         myMapView.isPitchEnabled = true
         
@@ -712,8 +701,6 @@ import iAd
         let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan.init(latitudeDelta: latDelta, longitudeDelta: longDelta)
         let sourceLocation = CLLocationCoordinate2D(latitude: 25.033493, longitude: 121.564101)
         let destinationLocation = CLLocationCoordinate2D(latitude: 22.817701, longitude: 120.2858)
-    
-        
                 // 3.
                 let sourcePlacemark = MKPlacemark(coordinate: sourceLocation, addressDictionary: nil)
                 let destinationPlacemark = MKPlacemark(coordinate: destinationLocation, addressDictionary: nil)
@@ -842,13 +829,8 @@ directions2.calculate{
                 let magnetic = motion.magneticField
                 print("\(magnetic.field.x),\(magnetic.field.y),\(magnetic.field.z)")
                 }
-            
-            
-            
         }
-  
-   
-        let typestoRead = Set([
+      let typestoRead = Set([
                   HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.mindfulSession)!,
                   ])
         
@@ -1091,9 +1073,7 @@ directions2.calculate{
         func numberOfSections(in tableView: UITableView) -> Int {
                 return 1
             }
-            
-        
-            // MARK: - Tool Methods - Alert
+          // MARK: - Tool Methods - Alert
             func showAlert(title: String, message: String, buttonTitle: String) {
                 let alert = UIAlertController(title: title,
                                               message: message,
@@ -1122,8 +1102,7 @@ directions2.calculate{
                     self.setHeartRate(76)
                     sleep(60)
                     
-                    
-                    self.getHeartRate(completion:{(results) in
+                  self.getHeartRate(completion:{(results) in
                         if let results = results{
                             let unit = HKUnit.count().unitDivided(by: .minute())
                             var value:Double
@@ -1135,9 +1114,7 @@ directions2.calculate{
                             }
                         }
                     })
-                    
-                
-                }else{
+               }else{
                     print("授權失敗．")
                 }
             })
@@ -1192,16 +1169,8 @@ directions2.calculate{
         }
         
         let path = Bundle.main.path(forResource: "index", ofType: ".html")
-        
- 
-    
-        
-    }
-    
-    
-    
-       
-    @IBAction func signUpAction(_ sender: Any) {
+}
+     @IBAction func signUpAction(_ sender: Any) {
         let signUpAlert = UIAlertController(title: "註冊", message: "註冊", preferredStyle: .alert)
                 let saveAction = UIAlertAction(title: "儲存", style: .default) { (action) in
                     let emailSignUpTextField = signUpAlert.textFields![0]
@@ -1572,10 +1541,6 @@ func createDirectionRequest(from coordinate:CLLocationCoordinate2D)->MKDirection
         request.destination = MKMapItem(placemark: destinationLocation)
         request.transportType = .transit
         request.requestsAlternateRoutes = true
-        
-        
-
-        
         return request
     }
     func requestLocationAccess() {
@@ -1652,7 +1617,6 @@ func createDirectionRequest(from coordinate:CLLocationCoordinate2D)->MKDirection
         })
         optionMenu.addAction(checkInAction)
      
-        
         let favoriteAction = UIAlertAction(title: "Mark as favorite", style: .default, handler: {(action:UIAlertAction!)->Void in
             
             let cell = _tableView.cellForRow(at: indexPath)
@@ -1840,9 +1804,7 @@ func createDirectionRequest(from coordinate:CLLocationCoordinate2D)->MKDirection
             // 開始定位自身位置
             myLocationManager.startUpdatingLocation()
         }
-   
-      
-    }
+ }
      
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -2299,7 +2261,6 @@ func createDirectionRequest(from coordinate:CLLocationCoordinate2D)->MKDirection
             
             
         }
-        
         
         func locationManager(_ manager: CLLocationManager,didUpdateHeading newHeading:CLHeading){
             if newHeading.headingAccuracy<0{
